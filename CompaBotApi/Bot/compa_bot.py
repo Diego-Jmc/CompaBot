@@ -1,6 +1,7 @@
 import re
 import unicodedata
 
+from Bot.answers_generator import AnswerGenerator
 from DB.db_connection import ChatBotRepository
 
 
@@ -30,7 +31,7 @@ class CompaBot():
 
         max_category = max(categories, key=categories.get)
 
-        return {"category": max_category, "matches": categories[max_category]}
+        return {"category": max_category, "matches": categories[max_category] , "question": question}
 
     def get_answer(self, question):
         question = normalize_question(question)
@@ -38,7 +39,8 @@ class CompaBot():
         return self.generate_answer(result)
 
     def generate_answer(self, result):
-        return "Nada aun"
+        generator = AnswerGenerator(result)
+        return generator.generate_answer()
 
     def get_questions(self):
         return self.chatBotRepository.find_questions()

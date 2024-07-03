@@ -2,6 +2,7 @@ from flask import Flask
 from flask import Flask, json, jsonify, request
 
 from Bot.compa_bot import CompaBot
+from DB.db_connection import ChatBotRepository
 
 app = Flask(__name__)
 
@@ -23,10 +24,8 @@ def get_questions():
 def ask():
     data = request.get_json()
     question = data.get("question")
-    return jsonify({
-        "your question was:": question,
-        "status": True
-    })
+    answer = compaBot.get_answer(question)
+    return jsonify(answer)
 
 
 if __name__ == '__main__':
