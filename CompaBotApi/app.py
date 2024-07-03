@@ -1,6 +1,17 @@
 from flask import Flask
 
+from DB.db_connection import ChatBotRepository
+
 app = Flask(__name__)
+
+atlas_client = ChatBotRepository()
+atlas_client.ping()
+
+try:
+    dataset = atlas_client.find_dataset()
+    print(dataset)
+except Exception as error:
+    print(error)
 
 
 @app.route('/')
