@@ -1,22 +1,32 @@
 from flask import Flask
+from flask import Flask, json, jsonify, request
 
-from DB.db_connection import ChatBotRepository
+from Bot.compa_bot import CompaBot
 
 app = Flask(__name__)
 
-atlas_client = ChatBotRepository()
-atlas_client.ping()
-
-try:
-    dataset = atlas_client.find_dataset()
-    print(dataset)
-except Exception as error:
-    print(error)
+compaBot = CompaBot()
 
 
 @app.route('/')
 def hello_world():  # put application's code here
     return 'Hello World!'
+
+
+@app.route('/questions')
+def get_questions():
+    questions = compaBot.get_questions()
+    return jsonify(questions)
+
+
+@app.route('/ask', methods=['POST'])
+def ask():
+    data = request.get_json()
+    question = data.get("question")
+    return jsonify({
+        "your question was:": question,
+        "status": True
+    })
 
 
 if __name__ == '__main__':

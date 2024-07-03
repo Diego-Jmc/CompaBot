@@ -3,6 +3,7 @@ class ChatBotRepository():
     ATLAS_URI = "mongodb+srv://diegojmoravia:planahead12345@cluster0.rkgclhv.mongodb.net/?appName=Cluster0"
     DB_NAME = 'CompaBot'
     DATASET_COLLECTION_NAME = 'keywords'
+    QUESTIONS_COLLECTION_NAME = 'questions'
 
     def __init__(self):
         self.mongodb_client = MongoClient(self.ATLAS_URI)
@@ -25,6 +26,13 @@ class ChatBotRepository():
         else:
             raise Exception("Error trying to retrieve the dataset")
 
+    def find_questions(self):
+        questions = self.find(self.QUESTIONS_COLLECTION_NAME)
+        if '_id' in questions[0]:
+            questions[0].pop('_id')
+            return questions[0]
+        else:
+            raise Exception("Error trying to retrieve the questions")
     def find(self, collection_name, filter={}, limit=0):
         collection = self.database[collection_name]
         items = list(collection.find(filter=filter, limit=limit))
