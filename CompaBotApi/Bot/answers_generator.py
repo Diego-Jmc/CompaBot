@@ -1,9 +1,11 @@
 from abc import abstractmethod
-
 import requests
-
 from DB.db_connection import ChatBotRepository
 
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
 #application of the strategy pattern for the implementation of each question
 class Generator():
     chatBotRepository = ChatBotRepository()
@@ -78,7 +80,7 @@ class WeatherInfoGenerator(Generator):
         super().__init__(attributes)
         self.attributes = attributes
     def do_operation(self):
-        resp = requests.get('https://www.meteosource.com/api/v1/free/point?place_id=san-jose-3621849&sections=current%2Chourly&language=en&units=auto&key=isu0nb80doeeef6i896rrtggt2wwlbtsfbe3tnpp')
+        resp = requests.get(os.getenv("WEATHER_API_KEY"))
         if resp.status_code == 200:
             data = resp.json()
 

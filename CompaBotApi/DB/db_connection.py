@@ -1,11 +1,17 @@
 from bson import json_util
 from pymongo.mongo_client import MongoClient
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+
+
 class ChatBotRepository():
-    ATLAS_URI = "mongodb+srv://diegojmoravia:planahead12345@cluster0.rkgclhv.mongodb.net/?appName=Cluster0"
-    DB_NAME = 'CompaBot'
-    DATASET_COLLECTION_NAME = 'keywords'
-    QUESTIONS_COLLECTION_NAME = 'questions'
-    COUNTRIES_INFO_DATASET = 'countries'
+    ATLAS_URI = os.getenv('ATLAS_URI')
+    DB_NAME = os.getenv('DB_NAME')
+    DATASET_COLLECTION_NAME = os.getenv('DATASET_COLLECTION_NAME')
+    QUESTIONS_COLLECTION_NAME = os.getenv('QUESTIONS_COLLECTION_NAME')
+    COUNTRIES_INFO_DATASET = os.getenv('COUNTRIES_INFO_DATASET')
 
     def __init__(self):
         self.mongodb_client = MongoClient(self.ATLAS_URI)
@@ -24,12 +30,12 @@ class ChatBotRepository():
         return keywords[0]
 
     def find_questions(self):
-            questions_collection = self.database.get_collection('questions')
-            questions = questions_collection.find({}, projection={'_id': False})
-            return questions
+        questions_collection = self.database.get_collection('questions')
+        questions = questions_collection.find({}, projection={'_id': False})
+        return questions
 
     def find_country(self, country):
-        countries_info = self.find(self.COUNTRIES_INFO_DATASET,{"country":country})
+        countries_info = self.find(self.COUNTRIES_INFO_DATASET, {"country": country})
         if countries_info:
             return countries_info[0]
         else:
@@ -44,11 +50,11 @@ class ChatBotRepository():
 
     def find(self, collection_name, filter={}, limit=0):
         collection = self.database[collection_name]
-        items = list(collection.find(filter=filter, limit=limit,projection={'_id': False}))
+        items = list(collection.find(filter=filter, limit=limit, projection={'_id': False}))
         return items
 
     def get_answer(self, intent):
-        questions = self.find(self.QUESTIONS_COLLECTION_NAME,{"intent":intent})
+        questions = self.find(self.QUESTIONS_COLLECTION_NAME, {"intent": intent})
         if questions:
             return questions[0]["respuesta"]
         else:

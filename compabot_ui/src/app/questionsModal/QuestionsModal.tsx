@@ -20,6 +20,7 @@ const QuestionsModal: React.FC<QuestionsModalProps> = ({ isOpen, onClose }) => {
             .then(res => {
                 if (res.status == 200) {
                     setQuestions(res.data)
+                    console.log(res.data)
                 }
             })
             .catch(err => {
