@@ -3,6 +3,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import './chat.css'
 import MessageBox from '../messageBox/messageBox';
 import axios from 'axios';
+import QuestionsModal from '../questionsModal/QuestionsModal';
 
 interface ChatProps {
 
@@ -15,27 +16,30 @@ interface MessageBoxProps {
 
 }
 
+interface MessageBoxPropsHour {
+    box: MessageBoxProps,
+    hour: string
+}
+
+
 const Chat: React.FC<ChatProps> = (props) => {
 
-    const [chatHistory, setChatHistory] = useState<MessageBoxProps[]>([])
+    // chat history to track all the sent messages
+    const [chatHistory, setChatHistory] = useState<MessageBoxPropsHour[]>([])
     const [questionToMake, setQuestionToMake] = useState<string>("")
+    const [showQuestionsModal, setShowQuestionsModal] = useState<boolean>(false)
 
     const msgHistoryContainerRef = useRef<HTMLDivElement>(null);
 
-    function updateOldMessages(): MessageBoxProps[] {
-        const updateMessages = chatHistory.map(e => {
-            e.typewriterEffect = false
-            return e
-        })
-
-        return updateMessages
+    function getCurrentHour() {
+        return new Date().getHours() + ":" + new Date().getMinutes()
     }
 
     async function getResponse(question: string): Promise<string> {
         const body = {
             question: question
         };
-    
+
         try {
             const response = await axios.post(`${process.env.NEXT_PUBLIC_SERVER_URL}/ask`, body);
             if (response.status === 200) {
@@ -50,29 +54,41 @@ const Chat: React.FC<ChatProps> = (props) => {
         }
     }
 
+    const handleQuestionsModal = (action: boolean) => {
+        setShowQuestionsModal(action)
+    }
 
     const handleOnSubmitQuestion = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
         const newMessage = {
-            isBot: false,
-            typewriterEffect: false,
-            message: questionToMake
+            box: {
+                isBot: false,
+                typewriterEffect: false,
+                message: questionToMake,
+            },
+
+            hour: getCurrentHour()
         };
 
         setChatHistory(prevChatHistory => [...prevChatHistory, newMessage]);
-        
+
         const response = await getResponse(questionToMake)
 
+
         const newChatbotMessage = {
-            isBot: true,
-            typewriterEffect: true,
-            message: response
+            box: {
+                isBot: true,
+                typewriterEffect: true,
+                message: response
+            },
+            hour: getCurrentHour()
         };
 
+        //  set all the chats to no typewriter effect to avoid multiple animations
         setChatHistory(prevChatHistory => {
             return [...prevChatHistory.map(e => {
-                e.typewriterEffect = false
+                e.box.typewriterEffect = false
                 return e
             }), newChatbotMessage]
         });
@@ -84,6 +100,7 @@ const Chat: React.FC<ChatProps> = (props) => {
         setQuestionToMake(event.target.value)
     }
 
+    // Scroll down every time there is a now message
     useEffect(() => {
         if (msgHistoryContainerRef.current) {
             msgHistoryContainerRef.current.scrollTo({
@@ -95,17 +112,21 @@ const Chat: React.FC<ChatProps> = (props) => {
 
     return (
         <div className="main-chatbox-container">
+            <QuestionsModal isOpen={showQuestionsModal} onClose={function (): void {
+                handleQuestionsModal(false)
+            }}  ></QuestionsModal>
             <div className='tittle'>
-                <h1>Try to speak with CompaBot</h1>
+                <h1>Try to chat with CompaBot</h1>
                 <div className='chat-container'>
 
                     <div className='msg-history-container' ref={msgHistoryContainerRef}>
                         {chatHistory.map((e, index) => (
                             <MessageBox
                                 key={index} // Asegúrate de usar un key único para cada elemento en la lista
-                                message={e.message}
-                                isBot={e.isBot}
-                                typewriterEffect={e.typewriterEffect}
+                                message={e.box.message}
+                                isBot={e.box.isBot}
+                                typewriterEffect={e.box.typewriterEffect}
+                                hourStr={e.hour}
                             />
                         ))}
 
@@ -126,9 +147,10 @@ const Chat: React.FC<ChatProps> = (props) => {
                         </div>
                     </form>
                 </div>
+                <button onClick={() => {
+                    handleQuestionsModal(true)
+                }} >Preguntas disponibles</button>
             </div>
-
-
 
         </div>
     );

@@ -1,4 +1,4 @@
-from flask import Flask, json, jsonify, request
+from flask import Flask, jsonify, request
 from Bot.compa_bot import CompaBot
 from flask_cors import CORS
 

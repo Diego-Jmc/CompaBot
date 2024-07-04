@@ -4,7 +4,6 @@
     border: none;
     margin: 2rem;
     display: flex;
-    
 }
 
 
@@ -14,6 +13,14 @@
 
 .chat-pos{
     justify-content: start;
+}
+
+.hour-container{
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    color: #758694;
+    font-size: .7em;
 }
 
 .msg{
@@ -50,7 +57,6 @@
   animation:
     typing 2s steps(18),
     cursor .4s step-end infinite alternate;
-
     max-width: 400px;   
     white-space: wrap; 
 }

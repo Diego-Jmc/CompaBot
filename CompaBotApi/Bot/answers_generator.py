@@ -1,7 +1,5 @@
 from abc import abstractmethod
-
 from DB.db_connection import ChatBotRepository
-
 
 #application of the strategy pattern for the implementation of each question
 class Generator():
@@ -102,7 +100,7 @@ class CountryCapitalInfoGenerator(Generator):
             return f"La capital de {found_country} es {country["city"]}"
 
         except Exception as e:
-            return f"Lo siento , porfavor escribe un país válido "
+            return f"Lo siento , porfavor escribe un país válido."
 
 class AnswerGenerator():
 
@@ -110,7 +108,6 @@ class AnswerGenerator():
         # function dictionary that stores all the strategies for every available question
         self.result = result
         self.generators = {
-
             "Desarrollador": DevInfoGenerator(result),
             "Capitales": CountryCapitalInfoGenerator(result),
             "Seguridad": SecurityInfoGenerator(result),

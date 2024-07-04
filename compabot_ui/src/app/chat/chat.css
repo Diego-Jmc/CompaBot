@@ -52,7 +52,6 @@
 
 /*Dark*/
 
-  
 .msg-history-container::-webkit-scrollbar {
     width: 12px;
 
@@ -68,4 +67,3 @@
     background: #888;
     border-radius: 6px;
 }
-
