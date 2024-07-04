@@ -1,4 +1,7 @@
 from abc import abstractmethod
+
+import requests
+
 from DB.db_connection import ChatBotRepository
 
 #application of the strategy pattern for the implementation of each question
@@ -74,6 +77,32 @@ class WeatherInfoGenerator(Generator):
     def __init__(self, attributes):
         super().__init__(attributes)
         self.attributes = attributes
+    def do_operation(self):
+        resp = requests.get('https://www.meteosource.com/api/v1/free/point?place_id=san-jose-3621849&sections=current%2Chourly&language=en&units=auto&key=isu0nb80doeeef6i896rrtggt2wwlbtsfbe3tnpp')
+        if resp.status_code == 200:
+            data = resp.json()
+
+            current_weather = data.get('current', {})
+            temperature = current_weather.get('temperature')
+            wind_speed = current_weather.get('wind', {}).get('speed')
+            weather_summary = current_weather.get('summary')
+            weather_icon = current_weather.get('icon')
+
+            short_data = {
+                'temperature': temperature,
+                'wind_speed': wind_speed,
+                'summary': weather_summary,
+                'weather': weather_icon
+            }
+            print(short_data)
+
+            return f"""
+            temperatura: {temperature}g
+            velocidad del viendo: {wind_speed}km/h
+            tipo de clima: {weather_summary}
+            """
+        else:
+            return "Error tratando de acceder a los datos del clima en Costa Rica."
 
 class CountryCapitalInfoGenerator(Generator):
     def __init__(self, attributes):
@@ -118,6 +147,7 @@ class AnswerGenerator():
             "Curiosidad": CuriosityInfoGenerator(result),
             "Geografia": OceanInfoGenerator(result),
             "Musica": MusicInfoGenerator(result),
+            "Clima": WeatherInfoGenerator(result),
         }
     def generate_answer(self):
 
