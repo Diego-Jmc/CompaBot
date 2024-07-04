@@ -67,3 +67,15 @@
     background: #888;
     border-radius: 6px;
 }
+
+
+.basic-btn{
+    padding:.5rem;
+    border: none;
+    cursor: pointer;
+}
+
+.red-btn{
+    background-color: #f95959;
+    color: #fff;
+}

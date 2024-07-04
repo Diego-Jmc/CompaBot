@@ -3,14 +3,15 @@ import unicodedata
 from Bot.answers_generator import AnswerGenerator
 from DB.db_connection import ChatBotRepository
 
-class CompaBot():
 
+class CompaBot():
     chatBotRepository = ChatBotRepository()
+
     def __init__(self):
         self.dataset = self.chatBotRepository.find_dataset()
 
     # cleans all the text to converting to lowercase and removes especial characters
-    def normalize_question(self,question):
+    def normalize_question(self, question):
         question = question.lower()
         question = unicodedata.normalize('NFKD', question).encode('ascii', 'ignore').decode('utf-8', 'ignore')
         question = re.sub(r'[^a-z0-9\s]', '', question)
@@ -27,12 +28,15 @@ class CompaBot():
 
         max_category = max(categories, key=categories.get)
 
-        return {"category": max_category, "matches": categories[max_category] , "question": question}
+        return {"category": max_category, "matches": categories[max_category], "question": question}
 
     def get_answer(self, question):
-        question = self.normalize_question(question) #normalize question before clasification
-        result = self.classifyQuestion(question)
-        return self.generate_answer(result)
+        if "".join(question.split()) is "":
+            return "Parece que tu mensaje esta en blanco , porfavor suministra una pregunta valida."
+        else:
+            question = self.normalize_question(question)  #normalize question before clasification
+            result = self.classifyQuestion(question)
+            return self.generate_answer(result)
 
     def generate_answer(self, result):
         generator = AnswerGenerator(result)

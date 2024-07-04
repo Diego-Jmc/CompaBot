@@ -113,8 +113,8 @@ const Chat: React.FC<ChatProps> = (props) => {
     return (
         <div className="main-chatbox-container">
             <QuestionsModal isOpen={showQuestionsModal} onClose={function (): void {
-                handleQuestionsModal(false)
-            }}  ></QuestionsModal>
+                handleQuestionsModal(false);
+            } }  ></QuestionsModal>
             <div className='tittle'>
                 <h1>Try to chat with CompaBot</h1>
                 <div className='chat-container'>
@@ -147,7 +147,7 @@ const Chat: React.FC<ChatProps> = (props) => {
                         </div>
                     </form>
                 </div>
-                <button onClick={() => {
+                <button className="basic-btn red-btn" onClick={() => {
                     handleQuestionsModal(true)
                 }} >Preguntas disponibles</button>
             </div>

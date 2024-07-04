@@ -7,14 +7,17 @@ CORS(app)
 
 compaBot = CompaBot()
 
+
 @app.route('/')
 def hello_world():  # put application's code here
     return 'Hello World!'
 
+
 @app.route('/questions')
 def get_questions():
     questions = compaBot.get_questions()
-    return jsonify(questions)
+    clean_questions = [e.get('question') for e in questions]
+    return clean_questions
 
 
 @app.route('/ask', methods=['POST'])

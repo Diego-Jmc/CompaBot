@@ -1,3 +1,4 @@
+from bson import json_util
 from pymongo.mongo_client import MongoClient
 class ChatBotRepository():
     ATLAS_URI = "mongodb+srv://diegojmoravia:planahead12345@cluster0.rkgclhv.mongodb.net/?appName=Cluster0"
@@ -20,19 +21,12 @@ class ChatBotRepository():
 
     def find_dataset(self):
         keywords = self.find(self.DATASET_COLLECTION_NAME)
-        if '_id' in keywords[0]:
-            keywords[0].pop('_id')
-            return keywords[0]
-        else:
-            raise Exception("Error trying to retrieve the dataset")
+        return keywords[0]
 
     def find_questions(self):
-        questions = self.find(self.QUESTIONS_COLLECTION_NAME)
-        if '_id' in questions:
-            questions.pop('_id')
+            questions_collection = self.database.get_collection('questions')
+            questions = questions_collection.find({}, projection={'_id': False})
             return questions
-        else:
-            raise Exception("Error trying to retrieve the questions")
 
     def find_country(self, country):
         countries_info = self.find(self.COUNTRIES_INFO_DATASET,{"country":country})
@@ -50,7 +44,7 @@ class ChatBotRepository():
 
     def find(self, collection_name, filter={}, limit=0):
         collection = self.database[collection_name]
-        items = list(collection.find(filter=filter, limit=limit))
+        items = list(collection.find(filter=filter, limit=limit,projection={'_id': False}))
         return items
 
     def get_answer(self, intent):

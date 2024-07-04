@@ -12,7 +12,7 @@
   }
   
   .questions-modal {
-    background-color: #fff;
+    background-color: #f95959;
     padding: 20px;
     max-width: 600px;
     width: 100%;
@@ -44,5 +44,8 @@
     padding: 8px 12px;
     border-radius: 4px;
     cursor: pointer;
+    color: #000;
   }
+  
+
   
