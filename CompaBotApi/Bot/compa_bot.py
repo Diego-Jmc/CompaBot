@@ -42,5 +42,8 @@ class CompaBot():
         generator = AnswerGenerator(result)
         return generator.generate_answer()
 
+    def get_answer(self, intent):
+        result = self.chatBotRepository.get_answer(intent)
+        return result
     def get_questions(self):
         return self.chatBotRepository.find_questions()

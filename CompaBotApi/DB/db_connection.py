@@ -53,3 +53,11 @@ class ChatBotRepository():
         collection = self.database[collection_name]
         items = list(collection.find(filter=filter, limit=limit))
         return items
+
+    def get_answer(self, intent):
+        questions = self.find(self.QUESTIONS_COLLECTION_NAME,{"intent":intent})
+        if questions:
+            return questions[0]["respuesta"]
+        else:
+            raise Exception("Error trying to retrieve the questions")
+

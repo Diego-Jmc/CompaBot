@@ -2,14 +2,17 @@ from flask import Flask, json, jsonify, request
 from Bot.compa_bot import CompaBot
 from flask_cors import CORS
 
+from DB.db_connection import ChatBotRepository
+
 app = Flask(__name__)
 CORS(app)
 compaBot = CompaBot()
 
 @app.route('/')
 def hello_world():  # put application's code here
+    chat = ChatBotRepository()
+    print(chat.get_answer("Seguridad"))
     return 'Hello World!'
-
 
 @app.route('/questions')
 def get_questions():
