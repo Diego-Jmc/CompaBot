@@ -31,7 +31,7 @@ class CompaBot():
 
         max_category = max(categories, key=categories.get)
 
-        return {"category": max_category, "matches": categories[max_category] , "question": question}
+        return {"category": max_category, "matches": categories[max_category] , "attributes": question}
 
     def get_answer(self, question):
         question = normalize_question(question)

@@ -10,7 +10,6 @@ class ChatBotRepository():
         self.mongodb_client = MongoClient(self.ATLAS_URI)
         self.database = self.mongodb_client[self.DB_NAME]
 
-    ## A quick way to test if we can connect to Atlas instance
     def ping(self):
         self.mongodb_client.admin.command('ping')
         print('Connected to Atlas instance! We are good to go!')

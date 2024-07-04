@@ -6,27 +6,95 @@ from DB.db_connection import ChatBotRepository
 class Generator():
     chatBotRepository = ChatBotRepository()
 
-    def __init__(self, question):
-        self.crit = question
+    def __init__(self, attributes):
+        self.crit = attributes
 
     @abstractmethod
-    def do_operation(self, question=""):
-        pass
+    def do_operation(self, attributes={}):
+        try:
+            answer = self.chatBotRepository.get_answer(attributes.intent)
+            return answer
+        except Exception as e:
+            return "No se pudo procesar la pregunta"
 
 
 class DevInfoGenerator(Generator):
-    def do_operation(self, question=""):
-        return "El desarrollador se llama Diego Jiménez C , Nacido en 2001 en San Jose Costa Rica."
+    def __init__(self, attributes):
+        super().__init__(attributes)
+        self.crit = attributes
+
+
+class FunctionalityInfoGenerator(Generator):
+    def __init__(self, attributes):
+        super().__init__(attributes)
+        self.crit = attributes
+
+
+class LanguagesFunctionalityInfoGenerator(Generator):
+    def __init__(self, attributes):
+        super().__init__(attributes)
+        self.crit = attributes
+
+
+class PlanetsFunctionalityInfoGenerator(Generator):
+    def __init__(self, attributes):
+        super().__init__(attributes)
+        self.crit = attributes
+
+
+class WorldPlacesGenerator(Generator):
+    def __init__(self, attributes):
+        super().__init__(attributes)
+        self.crit = attributes
 
 
 class CountryCapitalInfoGenerator(Generator):
+    def __init__(self, attributes):
+        super().__init__(attributes)
+        self.crit = attributes
 
-    def do_operation(self, question=""):
+
+class SecurityInfoGenerator(Generator):
+    def __init__(self, attributes):
+        super().__init__(attributes)
+        self.crit = attributes
+
+
+class CuriosityInfoGenerator(Generator):
+    def __init__(self, attributes):
+        super().__init__(attributes)
+        self.crit = attributes
+
+
+class OceanInfoGenerator(Generator):
+    def __init__(self, attributes):
+        super().__init__(attributes)
+        self.crit = attributes
+
+
+class MusicInfoGenerator(Generator):
+    def __init__(self, attributes):
+        super().__init__(attributes)
+        self.crit = attributes
+
+
+class WeatherInfoGenerator(Generator):
+    def __init__(self, attributes):
+        super().__init__(attributes)
+        self.crit = attributes
+
+
+class CountryCapitalInfoGenerator(Generator):
+    def __init__(self, attributes):
+        super().__init__(attributes)
+        self.crit = attributes
+
+    def do_operation(self, attributes=""):
         try:
 
             countries = [e["country"] for e in self.chatBotRepository.find_all_countries()]
             found_country = ""
-            joined_countries = "".join(question).lower()
+            joined_countries = "".join(attributes).lower()
             joined_countries = joined_countries.replace(" ", "")
 
             for country in countries:
@@ -42,96 +110,6 @@ class CountryCapitalInfoGenerator(Generator):
 
         except Exception as e:
             return f"Lo siento , porfavor escribe un país válido "
-
-
-class SecurityInfoGenerator(Generator):
-    def do_operation(self, question=""):
-        return "Esta aplicacion usa varios metodos de seguridad como el uso de variables de ambiente"
-
-
-class FunctionalityInfoGenerator(Generator):
-    def do_operation(self, question=""):
-        return """
-        El algoritmo consiste en hacer una limpieza del input (es decir, de la pregunta) y comparar el número de aciertos 
-        de palabras con el conjunto de datos que se tienen de entrenamiento. Este modelo funciona mejor dependiendo del número
-        de datos que existan.
-        """
-
-
-class LanguagesFunctionalityInfoGenerator(Generator):
-    def do_operation(self, question=""):
-        return """
-        1.Python
-        2.JavaScript
-        3.Java
-        4.C++
-        5.C#
-        6.PHP
-        7.TypeScript
-        8.Ruby
-        9.Swift
-        10.Go       
-        """
-class PlanetsFunctionalityInfoGenerator(Generator):
-    def do_operation(self, question=""):
-        return """
-        1. Mercurio
-        2. Venus
-        3. Tierra
-        4. Marte
-        5. Júpiter
-        6. Saturno
-        7. Urano
-        8. Neptuno
-        9. Plutón
-        """
-class WorldPlacesGenerator(Generator):
-    def do_operation(self, question=""):
-        return """
-1. Gran Pirámide de Guiza
-   - Ubicación: Guiza, Egipto
-
-2. Jardines Colgantes de Babilonia
-   - Ubicación: Babilonia, Irak (ubicación exacta no confirmada)
-
-3. Estatua de Zeus en Olimpia
-   - Ubicación: Olimpia, Grecia
-
-4. Templo de Artemisa en Éfeso
-   - Ubicación: Éfeso, Turquía
-
-5. Mausoleo de Halicarnaso
-   - Ubicación: Bodrum, Turquía
-
-6. Coloso de Rodas
-   - Ubicación: Isla de Rodas, Grecia
-
-7. Faro de Alejandría
-   - Ubicación: Alejandría, Egipto
-
-Maravillas del Mundo Moderno:
-1. Chichén Itzá
-   - Ubicación: Yucatán, México
-
-2. Cristo Redentor
-   - Ubicación: Río de Janeiro, Brasil
-
-3. Gran Muralla China
-   - Ubicación: China
-
-4. Machu Picchu
-   - Ubicación: Cuzco, Perú
-
-5. Petra
-   - Ubicación: Ma'an, Jordania
-
-6. El Coliseo
-   - Ubicación: Roma, Italia
-
-7. Taj Mahal
-   - Ubicación: Agra, India
-
-"""
 
 
 class AnswerGenerator():
@@ -154,5 +132,4 @@ class AnswerGenerator():
             return (f"Creo que tu pregunta esta relacionada con: {self.result["category"]} , pero no tengo información "
                     f"suficiente para responder , porfavor formula tu pregunta con un poco mas de contexto.")
         else:
-            return self.generators[self.result["category"]].do_operation(self.result["question"])
-
+            return self.generators[self.result["category"]].do_operation(self.result["attributes"])

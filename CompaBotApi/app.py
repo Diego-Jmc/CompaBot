@@ -23,7 +23,7 @@ def get_questions():
 @app.route('/ask', methods=['POST'])
 def ask():
     data = request.get_json()
-    question = data.get("question")
+    question = data.get("attributes")
     answer = compaBot.get_answer(question)
     return jsonify(answer)
 
