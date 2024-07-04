@@ -1,25 +1,21 @@
 import re
 import unicodedata
-
 from Bot.answers_generator import AnswerGenerator
 from DB.db_connection import ChatBotRepository
 
-
-def normalize_question(question):
-    question = question.lower()
-    question = unicodedata.normalize('NFKD', question).encode('ascii', 'ignore').decode('utf-8', 'ignore')
-    question = re.sub(r'[^a-z0-9\s]', '', question)
-    question = re.sub(r'\s+', ' ', question).strip()
-    return question.split()
-
-
 class CompaBot():
-    chatBotRepository = ChatBotRepository()
 
+    chatBotRepository = ChatBotRepository()
     def __init__(self):
         self.dataset = self.chatBotRepository.find_dataset()
 
     # cleans all the text to converting to lowercase and removes especial characters
+    def normalize_question(self,question):
+        question = question.lower()
+        question = unicodedata.normalize('NFKD', question).encode('ascii', 'ignore').decode('utf-8', 'ignore')
+        question = re.sub(r'[^a-z0-9\s]', '', question)
+        question = re.sub(r'\s+', ' ', question).strip()
+        return question.split()
 
     def classifyQuestion(self, question):
         categories = {category: 0 for category in self.dataset}
@@ -31,10 +27,10 @@ class CompaBot():
 
         max_category = max(categories, key=categories.get)
 
-        return {"category": max_category, "matches": categories[max_category] , "attributes": question}
+        return {"category": max_category, "matches": categories[max_category] , "question": question}
 
     def get_answer(self, question):
-        question = normalize_question(question)
+        question = self.normalize_question(question) #normalize question before clasification
         result = self.classifyQuestion(question)
         return self.generate_answer(result)
 
@@ -42,8 +38,5 @@ class CompaBot():
         generator = AnswerGenerator(result)
         return generator.generate_answer()
 
-    def get_answer(self, intent):
-        result = self.chatBotRepository.get_answer(intent)
-        return result
     def get_questions(self):
         return self.chatBotRepository.find_questions()

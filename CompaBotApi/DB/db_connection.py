@@ -59,4 +59,3 @@ class ChatBotRepository():
             return questions[0]["respuesta"]
         else:
             raise Exception("Error trying to retrieve the questions")
-
