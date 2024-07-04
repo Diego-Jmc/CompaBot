@@ -1,13 +1,10 @@
-from flask import Flask
 from flask import Flask, json, jsonify, request
-
 from Bot.compa_bot import CompaBot
-from DB.db_connection import ChatBotRepository
+from flask_cors import CORS
 
 app = Flask(__name__)
-
+CORS(app)
 compaBot = CompaBot()
-
 
 @app.route('/')
 def hello_world():  # put application's code here

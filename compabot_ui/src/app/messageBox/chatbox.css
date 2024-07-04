@@ -1,0 +1,71 @@
+.message-box{
+    padding: 1rem;
+    width: 100%;
+    border: none;
+    margin: 2rem;
+    display: flex;
+    
+}
+
+
+.user-pos{
+    justify-content: end;
+}
+
+.chat-pos{
+    justify-content: start;
+}
+
+.msg{
+    padding: 1rem;
+    display: inline-block;
+}
+
+.user-msg{
+    background-color: #f95959;
+    color: #fff;
+}
+
+.bot-msg{
+    background-color: #525252;
+    color: #fff;
+}
+.msg-content{
+    display: inline-block;
+}
+
+.chatbox-container{
+    display: inline-block;
+}
+
+.void-btn{
+    background-color: transparent;
+    border: none;
+}
+.chat-dialog{
+  border-right: 5px solid #fff;
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  animation:
+    typing 2s steps(18),
+    cursor .4s step-end infinite alternate;
+
+    max-width: 400px;   
+    white-space: wrap; 
+}
+
+
+
+/*cursor blinking*/
+@keyframes cursor{
+    50% {border-color : transparent}
+}
+
+
+/*typing effect*/
+
+@keyframes typing{
+    from {width: 0;}
+}
+

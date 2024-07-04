@@ -1,0 +1,71 @@
+
+.tittle h1 {
+    background: radial-gradient(circle, rgba(79,73,181,1) 0%, rgba(47,47,152,1) 54%, rgba(0,212,255,1) 81%);
+    color: transparent; 
+    -webkit-background-clip: text; 
+    background-clip: text;
+    padding: 2rem;
+}
+
+.chat-container {
+    width: 600px;
+    height: 500px;
+    display: flex;
+    flex-direction: column;
+    padding: 2rem;
+}
+
+.input-box-container{
+    height: 50px;
+    width: 100%;
+    background-color: transparent;
+    margin-top: auto;
+    padding: .5rem;
+    display: flex;
+    align-items: center;
+}
+
+.input-box-container input{
+    width: 100%;
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid #fff;
+    color: #fff;
+    outline: none;
+    font-size: 1.2em;
+    overflow-y: visible;
+
+}
+
+.send-msg-button{
+    color: #f95959;
+    margin: .2rem;
+    cursor: pointer;
+}
+
+
+.msg-history-container{
+    overflow-y: scroll; 
+    padding: 2rem; 
+    min-height: 400px;
+}
+
+/*Dark*/
+
+  
+.msg-history-container::-webkit-scrollbar {
+    width: 12px;
+
+}
+
+.msg-history-container::-webkit-scrollbar-track {
+    background-color: #2e2e2e; /* Mismo color que el fondo de la barra de desplazamiento */
+    border-radius: 10px;
+}
+
+
+.msg-history-container::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 6px;
+}
+
