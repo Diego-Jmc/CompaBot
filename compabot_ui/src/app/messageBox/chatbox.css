@@ -29,7 +29,7 @@
 }
 
 .user-msg{
-    background-color: #f95959;
+    background-color: var(--color-secondary);
     color: #fff;
 }
 

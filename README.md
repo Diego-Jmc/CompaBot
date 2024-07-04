@@ -4,17 +4,33 @@ CompaBot es un chatbot conversacional que responde un conjunto de preguntas ya p
 
 ## Installation
 
-Puedes probar la aplicacion accediendo a [CompaBot](https://www.google.com)
+Puedes probar la aplicacion accediendo a [CompaBot](https://compa-bot-nzz6.vercel.app/)
 o puedes ejecutar el proyecto localmente
 *Importante instalar las dependencias necesarias*
 
 ## ¿Que preguntas puedes hacer?
 
-- Creador
-- Seguridad
-- Capital de un pais
-- Clima actual en Costa rica
-- Como funciona el chatbot
+-¿Quién es tu desarrollador?
+
+-¿Qué medidas de seguridad usa el sistema?
+
+-Dime la capital de
+
+-Cómo funciona tu algoritmo
+
+-Cuál es el clima actual en San Jose Costa Rica
+
+-¿Cuales son los planetas del sistema solar?
+
+-¿Cuales son las 7 maravillas del mundo?
+
+-¿Cuál es el animal más rápido del mundo?
+
+-¿Cuál es el océano más grande del mundo?
+
+-¿Cuál es el instrumento musical más antiguo?
+
+-¿Cuáles son los lenguajes de programación mas populares?
 
 
 Haz la pregunta como gustes 

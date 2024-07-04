@@ -6,6 +6,8 @@ from dotenv import load_dotenv
 import os
 
 load_dotenv()
+
+
 #application of the strategy pattern for the implementation of each question
 class Generator():
     chatBotRepository = ChatBotRepository()
@@ -21,6 +23,7 @@ class Generator():
         except Exception as e:
             return "No se pudo procesar la pregunta"
 
+
 class DevInfoGenerator(Generator):
     def __init__(self, attributes):
         super().__init__(attributes)
@@ -30,55 +33,60 @@ class DevInfoGenerator(Generator):
         base_result = super().do_operation()
         return base_result
 
+
 class FunctionalityInfoGenerator(Generator):
     def __init__(self, attributes):
         super().__init__(attributes)
         self.attributes = attributes
+
 
 class LanguagesFunctionalityInfoGenerator(Generator):
     def __init__(self, attributes):
         super().__init__(attributes)
         self.crit = attributes
 
+
 class PlanetsFunctionalityInfoGenerator(Generator):
     def __init__(self, attributes):
         super().__init__(attributes)
         self.attributes = attributes
+
 
 class WorldPlacesGenerator(Generator):
     def __init__(self, attributes):
         super().__init__(attributes)
         self.attributes = attributes
 
+
 class CountryCapitalInfoGenerator(Generator):
     def __init__(self, attributes):
         super().__init__(attributes)
         self.attributes = attributes
+
 
 class SecurityInfoGenerator(Generator):
     def __init__(self, attributes):
         super().__init__(attributes)
         self.attributes = attributes
 
+
 class CuriosityInfoGenerator(Generator):
     def __init__(self, attributes):
         super().__init__(attributes)
         self.attributes = attributes
 
-class OceanInfoGenerator(Generator):
-    def __init__(self, attributes):
-        super().__init__(attributes)
-        self.attributes = attributes
 
 class MusicInfoGenerator(Generator):
     def __init__(self, attributes):
         super().__init__(attributes)
         self.attributes = attributes
 
+
 class WeatherInfoGenerator(Generator):
     def __init__(self, attributes):
         super().__init__(attributes)
         self.attributes = attributes
+
     def do_operation(self):
         resp = requests.get(os.getenv("WEATHER_API_KEY"))
         if resp.status_code == 200:
@@ -96,7 +104,6 @@ class WeatherInfoGenerator(Generator):
                 'summary': weather_summary,
                 'weather': weather_icon
             }
-            print(short_data)
 
             return f"""
             temperatura: {temperature}g
@@ -105,6 +112,7 @@ class WeatherInfoGenerator(Generator):
             """
         else:
             return "Error tratando de acceder a los datos del clima en Costa Rica."
+
 
 class CountryCapitalInfoGenerator(Generator):
     def __init__(self, attributes):
@@ -133,6 +141,7 @@ class CountryCapitalInfoGenerator(Generator):
         except Exception as e:
             return f"Lo siento , porfavor escribe un país válido."
 
+
 class AnswerGenerator():
 
     def __init__(self, result):
@@ -147,10 +156,10 @@ class AnswerGenerator():
             "Planetas": PlanetsFunctionalityInfoGenerator(result),
             "Maravillas": PlanetsFunctionalityInfoGenerator(result),
             "Curiosidad": CuriosityInfoGenerator(result),
-            "Geografia": OceanInfoGenerator(result),
             "Musica": MusicInfoGenerator(result),
             "Clima": WeatherInfoGenerator(result),
         }
+
     def generate_answer(self):
 
         if 2 > self.result["matches"] > 0:

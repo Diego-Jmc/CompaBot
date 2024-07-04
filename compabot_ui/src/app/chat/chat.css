@@ -38,7 +38,7 @@
 }
 
 .send-msg-button{
-    color: #f95959;
+    color: var(--color-secondary);
     margin: .2rem;
     cursor: pointer;
 }
@@ -76,6 +76,6 @@
 }
 
 .red-btn{
-    background-color: #f95959;
+    background-color: var(--color-secondary);
     color: #fff;
 }

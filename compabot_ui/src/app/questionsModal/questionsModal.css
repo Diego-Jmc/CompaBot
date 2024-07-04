@@ -12,7 +12,8 @@
   }
   
   .questions-modal {
-    background-color: #f95959;
+    background-color: var(--color-secondary);
+    color: var(--text-color);
     padding: 20px;
     max-width: 600px;
     width: 100%;
@@ -36,6 +37,7 @@
   .questions-modal-body {
     max-height: calc(100% - 60px); 
     overflow-y: auto; 
+
   }
   
   .close-button {
